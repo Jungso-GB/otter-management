@@ -18,12 +18,6 @@ async function verifyWord(message, bot) {
         "Tu pensais vraiment l’éviter ? Feur.",
     ];
 
-    const exceptionsUsers = ['173439968381894656', '143762806574022656'] // Sefa, Raziel
-
-    /*if (exceptionsUsers.includes(message.author.id)) {
-        return
-    }*/
-
     // Expressions régulières pour "feur"
     const feur1 = /\bquoi[\s\.,!?]*$/i;
     const feur2 = /\bkoi[\s\.,!?]*$/i;

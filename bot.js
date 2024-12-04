@@ -111,20 +111,20 @@ bot.removeAllListeners('messageCreate');
 console.log(`Nombre de listeners pour 'messageCreate' avant ajout: ${bot.listenerCount('messageCreate')}`);
 // Écouteur d'événements pour les nouveaux messages
 bot.on('messageCreate', async (message) => {
-
-  const exceptionsChannels = ['704404247445373029', '791052204823281714'] // table ronde, antre mafieuse, 
-
-  if (exceptionsChannels.includes(message.channel.id)) {
-      return
-  }
-
-  if (message.mentions.everyone) return; // Ne pas traiter les messages qui mentionnent @everyone ou @here
-  await verifyWord(message, bot)
-
+  // Exceptions générales
+  const exceptionsChannels = ['704404247445373029', '791052204823281714']; // Table ronde, Antre mafieuse
+  if (exceptionsChannels.includes(message.channel.id)) return; // Ne pas répondre aux messages de la Table ronde et de l'Antre mafieuse
   if (message.author.bot) return; // Ne pas répondre aux messages du bot lui-même
-  if(!message.mentions.has(bot.user)) return; // Ne pas traiter les messages qui ne mentionnent pas le bot
-  // Appeler saveQuote quand un message est reçu
-  await saveQuote(message, bot);
+  if (message.mentions.everyone) return; // Ne pas traiter les messages qui mentionnent @everyone ou @here
+  
+  // Feature "feur" et "keen'v"
+  // Appeler `verifyWord` quand un message est reçu
+  const exceptionsUsers = ['173439968381894656', '143762806574022656', '72405181253287936']; // Sefa, Raziel, Velena
+  if (!exceptionsUsers.includes(message.author.id)) await verifyWord(message, bot); // Ne pas répondre "feur" ou "keen'v" aux utilisateurs qui ont un totem d'immunité
+  
+  // Feature "citation"
+  // Appeler `saveQuote` quand un message est reçu
+  if (!message.mentions.has(bot.user)) await saveQuote(message, bot); // Ne pas traiter les messages qui ne mentionnent pas le bot
 });
 // Après avoir ajouté le listener
 console.log(`Nombre de listeners pour 'messageCreate' après ajout: ${bot.listenerCount('messageCreate')}`);
